@@ -1,20 +1,18 @@
-version: '3.0'
-services:
-  rasa:
-    image: rasa/rasa:latest-full
-    ports:
-      - 5005:5005
-    volumes:
-      - ./:/app
-    environment:
-      RASA_DUCKLING_HTTP_URL: http://rasa-duckling:8000
-    command: run --model models/dialogue --endpoints endpoints.yml
-  rasa-actions:
-    build:
-      context: .
-    ports:
-      - 5055:5055
-  rasa-duckling:
-    image: rasa/duckling
-    ports:
-      - 8000:8000
+# Use an official Python runtime as a parent image
+FROM python:3.7-slim
+
+# Set the working directory in the container to /app
+WORKDIR /app
+
+# Add current directory content to /app in the container
+ADD . /app
+
+# Install Rasa and Rasa[spacy]
+RUN pip install rasa[spacy]
+
+# Download spacy language model
+RUN python -m spacy download en_core_web_md
+RUN python -m spacy link en_core_web_md en
+
+# Initialize a new Rasa project
+RUN rasa init --no-prompt
