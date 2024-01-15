@@ -1,0 +1,19 @@
+version: '3.0'
+services:
+  rasa:
+    build: 
+      context: .
+    ports:
+      - 5005:5005
+    volumes:
+      - ./:/app
+    command: run --model models/dialogue --endpoints endpoints.yml
+  rasa-actions:
+    build:
+      context: .
+    ports:
+      - 5055:5055
+  rasa-duckling:
+    image: rasa/duckling
+    ports:
+      - 8000:8000
