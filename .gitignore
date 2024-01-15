@@ -1,0 +1,11 @@
+# Ignore all files in the .rasa/cache/ directory
+.rasa/cache/*
+
+# Ignore all .tar.gz files in the models directory
+models/*.tar.gz
+
+# Ignore the VS Code settings file
+.vscode/settings.json
+
+# Ignore all .pyc files in the actions directory
+actions/__pycache__/*.pyc
