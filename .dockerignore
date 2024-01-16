@@ -1,0 +1,28 @@
+# Ignore Python cache files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore git history
+.git
+
+# Ignore all log files
+*.log
+
+# Ignore all .env files
+*.env
+
+# Ignore other non-essential files
+.DS_Store
+*.swp
+*~
+
+# Ignore tests, models, actions directories and .md files
+tests/*
+models/*
+actions/*
+*.md
+
+# Ignore virtual environment
+venv/
