@@ -1,0 +1,194 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - HI
+    - Hello
+    - Hey
+    - Hi
+    - Hello there
+    - Good morning
+    - Good evening
+    - Hi I am [Hugo](entity_first_name)
+- intent: deny
+  examples: |
+    - no
+    - nah
+    - no thanks
+    - no thank you
+    - not today
+    - sorry not today
+    - nope
+    - nope not today
+    - nope not interested
+    - no thanks not interested
+    - no thanks not today
+    - no that's incorrect
+    - no that's wrong
+    - no that's not right
+    - no that's not correct
+    - no that's not what i want
+    - no that's not what i'm looking for
+    - no that's not what i'm looking for today
+    - no that's not what i'm looking for right now
+    - no my first_name is [frank](entity_first_name)
+    - no my email is [lola@example.co](email)
+    - no my phone number is [1234567890](number)
+    - No my name is not [Hugo](entity_first_name)
+    - No thanks that's all
+    - No thanks that's all for today
+    - no I am good
+- intent: affirm
+  examples: |
+    - Yes
+    - Sure
+    - Absolutely
+    - Of course
+    - Yes please
+    - Yes, I would like to know more
+    - Yes, I would like to know more about your products
+    - Yes, I would like to know more about your chatbots products
+    - Yes, give me more information about conversational ai
+    - why not
+    - Can you tell me more about your products?
+    - yea
+    - Yep!
+    - sure
+    - yes
+    - yes please
+    - tell me more
+    - yes that's right
+    - Yes that's correct
+    - Yes that's what I want
+    - Yes that's what I'm looking for
+    - Yes that's what I'm looking for today
+    - yes that's correct
+- intent: want_to_be_contacted
+  examples: |
+    - contact me
+    - How can I get in touch with you?
+    - I want to speak to a human
+    - Yes, I want to be contacted
+    - Yes, I want to be contacted by email
+    - Yes, I want to be contacted by
+    - Yes, I want to be contacted by email and whatsapp
+    - Yes, I want to be contacted by phone and email
+    - Yes, I want to be contacted by email or phone
+    - how can i get in touch
+    - coontact me
+    - I want to get in touch
+- intent: bot_challenge
+  examples: |
+    - Are you a bot?
+    - Are you a human?
+- intent: ask_more_information_about_products
+  examples: |
+    - Can you show me some examples?
+    - Can you show me some examples of your work?
+    - Can you show me some examples of your chatbots?
+    - Can you show me some examples of your chatbots for restaurants?
+    - Can you show me some examples of your chatbots for e-commerce?
+    - Can you show me some examples of your chatbots for commerce?
+    - can you show me an example
+    - show some
+- intent: inform
+  examples: |
+    - [auaua@dbdd.com](email)
+    - [John](entity_first_name)
+    - [Mary](entity_first_name)
+    - [Robert](entity_first_name)
+    - [Sophia](entity_first_name)
+    - [Emma](entity_first_name)
+    - [Mike](entity_first_name)
+    - [Sarah](entity_first_name)
+    - [Harris](entity_first_name)
+    - [Luke](entity_first_name)
+    - [Pat](entity_first_name)
+    - [1234567890](number)
+    - [0987654321](number)
+    - You can call me [Harris](entity_first_name)
+    - I am [Sarah](entity_first_name)
+    - Please, call me [Mike](entity_first_name)
+    - Just call me [Emma](entity_first_name)
+    - I'm [Robert](entity_first_name)
+    - People call me [Sophia](entity_first_name)
+    - My email is [john@example.com](email)
+    - [john@example.com](email) is my email
+    - [john@example.com](email)
+    - My email address is [mary@example.com](email)
+    - Send me an email at [harris@example.com](email)
+    - I can be reached at [sarah@example.com](email)
+    - My contact email is [mike@example.com](email)
+    - Please email me at [emma@example.com](email)
+    - My phone number is [1234567890](number)
+    - [1234567890](number) is my phone number
+    - You can call me at [1234567890](number)
+    - Reach me at [0987654321](number)
+    - My contact number is [1122334455](number)
+    - I can be reached at [6677889900](number)
+    - Call me on [4455667788](number)
+    - My mobile is [9988776655](number)
+    - [alice](entity_first_name)
+    - [+123444555](number)
+    - [hagag@hghggh.com](email)
+    - [lulu](entity_first_name)
+    - [ric](entity_first_name)
+    - My entity_first_name is [Mary](entity_first_name)
+    - [37373737](number)
+    - [gddgdg@djjdj.com](email)
+    - My name is [John](entity_first_name)
+    - My name is [Yoko](entity_first_name)
+    - [yoko@ono.jap](email)
+    - [yoko@ono.com](email)
+    - [2939393939](number)
+    - My name is [Javier](entity_first_name)
+    - my email is [javier@gmail.com](email)
+    - [611276626](number)
+    - my mail is [juko-8w8**09ak@kualsonxjs.ko.poa](email)
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - ok thanks goodbye
+    - perfect! that was enough for today
+    - thanks a lot ... bye
+    - stop
+    - end
+    - cancel
+    - abort
+    - quit
+    - nevermind
+    - I changed my mind
+    - I don't want to continue
+    - I don't want to continue anymore
+    - I don't want to continue with this form
+    - I don't want to continue with this
+    - I don't want to continue with this anymore
+    - I don't want to continue with this form anymore
+- regex: email
+  examples: |
+    - [a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+
+- regex: number
+  examples: |
+    - \\+?[0-9]{10,15}
