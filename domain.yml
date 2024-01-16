@@ -1,0 +1,105 @@
+version: '3.1'
+intents:
+- affirm
+- ask_more_information_about_products
+- bot_challenge
+- deny
+- goodbye
+- greet
+- inform
+- want_to_be_contacted
+entities:
+- number
+- email
+- entity_first_name
+slots:
+  confirm_first_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      intent: inform
+      entity: entity_first_name
+  first_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: contact_form
+        requested_slot: first_name
+  number:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: number
+  email:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: email
+forms:
+  contact_form:
+    required_slots:
+    - confirm_first_name
+    - first_name
+    - number
+    - email
+responses:
+  utter_goodbye:
+  - text: '"Thank you have a nice day"'
+  utter_greet:
+  - text: How are you? Would you like to know about our products?
+  utter_welcome_to_our_products:
+  - text: 'We can make highly-personalized bot for any commerce. As an example you can showcase two products: restaurant or e-commerce.'
+  utter_give_more_info_about_products:
+  - text: 'Sure here are some examples and functionalities  of our chatbots: 1. Restaurant: https://www.youtube.com/watch?v=9jO8jJXqzqA 2. E-commerce: https://www.youtube.com/watch?v=9jO8jJXqzqA'
+  utter_ask_continue:
+  - text: Are you sure you want to stop the form?
+  utter_want_to_be_contacted:
+  - text: Would you like to get a quote?
+  utter_ask_contact_form_first_name:
+  - text: Type you name with no spaces or special characters  (e.g. John)
+  utter_ask_contact_form_number:
+  - text: What your mobile number?
+  utter_ask_contact_form_email:
+  - text: What is your email?
+  utter_confirm_info:
+  - text: 'Is this information correct?  Name: {first_name}, Number: {number}, Email: {email}'
+  utter_anything_else:
+  - text: Is there anything else I can help you with?
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_goodbye_confirmation:
+  - text: We'll get in touch with you soon. You'll receive an email from us.
+  utter_default:
+  - text: Sorry I cannot help you with that. Please try something else.
+  utter_ask_rephrase:
+   - text: I'm sorry, I didn't understand that. Can you rephrase or repeat?
+  utter_submit_form:
+  - text: All done! We have received your information. We'll get in touch with you soon.
+actions:
+- action_submit
+- utter_welcome_to_our_products
+- action_check_confirm_first_name
+- action_check_if_first_name_is_known
+- action_set_first_name
+- utter_anything_else
+- utter_confirm_info
+- utter_goodbye
+- action_reset_form
+- validate_contact_form
+- utter_greet
+- utter_want_to_be_contacted
+- utter_goodbye_confirmation
+- utter_ask_continue
+- utter_iamabot
+- utter_submit_form
+#- action_default_fallback
+- action_two_stage_fallback
+- action_save_to_db
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
