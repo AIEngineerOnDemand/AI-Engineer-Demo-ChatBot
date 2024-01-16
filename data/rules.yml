@@ -1,0 +1,95 @@
+rules:
+
+# Rule 1: Respond to user challenges
+# This rule is triggered when the user's intent is 'bot_challenge'.
+# The bot responds by executing the 'utter_iamabot' action.
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+# Rule 2: Activate contact form
+# This rule is triggered when the user's intent is 'want_to_be_contacted'.
+# The bot responds by executing the 'action_check_if_first_name_is_known' action.
+- rule: Activate contact form
+  steps:
+  - intent: want_to_be_contacted
+  - action: action_check_if_first_name_is_known
+  - action: action_check_confirm_first_name
+
+# Rule 3: User affirms first name
+# This rule is triggered when the user's intent is 'affirm' and the 'confirm_first_name' slot is set to true.
+# The bot responds by executing the 'action_set_first_name' action, which sets the 'first_name' slot to the value of the 'confirm_first_name' slot.
+# Then, the 'contact_form' is activated and the bot enters the 'contact_form' loop.
+- rule: User affirms first name
+  condition:
+    - slot_was_set:
+        - confirm_first_name: true
+  steps:
+  - action: action_check_confirm_first_name
+  - intent: affirm
+  - action: action_set_first_name 
+
+
+# Rule 4: Submit Contact Form
+# This rule is triggered when the 'contact_form' loop is active.
+# (Add more details about what happens when this rule is triggered)
+- rule: Submit Contact Form
+  condition:
+    - active_loop: contact_form
+  steps:
+  # Form is deactivated
+  - action: contact_form
+  - active_loop: null
+  - slot_was_set:
+      - requested_slot: null
+    # The actions we want to run when the form is submitted.    
+  - action: action_submit
+  - action: utter_confirm_info
+
+- rule:  Submittions confirmation
+  steps:
+  - action: utter_confirm_info
+  - intent: deny
+  - action: action_reset_form
+
+
+
+- rule:  Give more info about products
+  steps:
+  - intent: ask_more_information_about_products
+  - action: utter_give_more_info_about_products
+
+
+# add a rule to rephrase the question if the intent has low confidence
+# - rule: Ask again if the intent is not recognized
+#   steps:
+#    - intent: nlu_fallback
+#    - action: utter_default_ask_rephrase
+
+# - rule: Handle the fallback intent
+#   steps:
+#    - intent: nlu_fallback
+#    - action: action_default_fallback   
+
+- rule: Two-stage fallback policy
+  steps:    
+  - intent: nlu_fallback
+  - action: action_two_stage_fallback
+  - active_loop: action_two_stage_fallback
+
+- rule: Reset form if the user says 'no' when asked for affirmation
+  condition:
+  - active_loop: contact_form
+  steps:
+  - intent: deny
+  - action: action_reset_form
+
+- rule: User says stop or goodbye anytime during the form
+  condition:
+  - active_loop: contact_form
+  steps:
+  - intent: goodbye
+  - action: action_deactivate_loop
+  - active_loop: null
+  - action: utter_goodbye
