@@ -1,0 +1,81 @@
+recipe: default.v1
+
+language: en
+
+assistant_id: 20231229-133740-rectilinear-pitch
+
+
+pipeline:
+- name: WhitespaceTokenizer
+- name: RegexFeaturizer
+- name: LanguageModelFeaturizer
+  model_name: "bert"
+  model_weights: "bert-base-uncased"
+- name: CountVectorsFeaturizer
+  analyzer: "char_wb"
+  min_ngram: 1
+  max_ngram: 4
+- name: DIETClassifier
+  epochs: 100
+  constrain_similarities: true
+- name: EntitySynonymMapper
+- name: ResponseSelector
+  epochs: 100
+  constrain_similarities: true
+  retrieval_intent: faq
+  scale_loss: true
+  use_masked_language_model: false
+  nlu_transformer_size: 512
+  number_of_transformer_layers: 2
+  transformer_size: 512
+  hidden_layers_sizes:
+      text: []
+      label: []
+- name: FallbackClassifier
+  threshold: 0.7
+  ambiguity_threshold: 0.1  
+
+# This YAML file contains the configuration settings for the Rasa chatbot. It specifies the policies to be used for dialogue management.
+# The policies section defines the different policies to be used, along with their respective parameters.
+# - MemoizationPolicy: This policy stores the conversation history and predicts the next action based on the most recent similar conversation.
+#   - max_history: The maximum number of previous user inputs to consider for prediction.
+# - TEDPolicy: This policy uses the Transformer Embedding Dialogue (TED) model for dialogue management.
+#   - max_history: The maximum number of previous user inputs to consider for prediction.
+#   - epochs: The number of training epochs for the TED model.
+#   - constrain_similarities: Whether to constrain the similarity values between different actions.
+# - RulePolicy: This policy uses predefined rules to handle fallback actions when the dialogue management models are uncertain.
+#   - core_fallback_threshold: The confidence threshold below which the fallback action is triggered.
+#   - core_fallback_action_name: The name of the fallback action to be executed.
+#   - enable_fallback_prediction: Whether to enable fallback prediction for uncertain dialogue situations.
+policies:
+- name: MemoizationPolicy
+  max_history: 10
+- name: TEDPolicy
+  max_history: 5
+  epochs: 100
+  constrain_similarities: True
+- name: RulePolicy
+  # core_fallback_threshold: 0.3
+  # core_fallback_action_name: "action_default_fallback"
+  # enable_fallback_prediction: True
+
+
+data:
+  - data/nlu.md
+  - data/stories.md
+  - data/rules.yml
+  #- data/faq.yml 
+  
+  
+
+
+
+  # policies:
+  #   - name: "TwoStageFallbackPolicy"
+  #     nlu_threshold: 0.8
+  #     ambiguity_threshold: 0.1
+  #     not_intent: "out_of_scope"
+  #     deny_suggestion_intent_name: "out_of_scope"
+  #     fallback_core_action_name: "action_default_ask_rephrase"
+  #     fallback_nlu_action_name: "action_default_ask_rephrase"
+  #     deny_suggestion_intent_name: "out_of_scope"
