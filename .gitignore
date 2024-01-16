@@ -9,3 +9,5 @@ models/*.tar.gz
 
 # Ignore all .pyc files in the actions directory
 actions/__pycache__/*.pyc
+
+actions/__init__.py
