@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "rasacourse"
+version = "0.1.0"
+description = ""
+authors = ["AIEngineerOnDemand <giopantana@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8.1,<3.11"
+rasa = "^3.6.15"
+spacy = "^3.7.2"
+transformers = "^4.36.2"
+protobuf = "4.23.3"
+pymysql = "^1.1.0"
+python-dotenv = "^1.0.0"
+jinja2 = "^3.1.2"
+
+[tool.pyright]
+pythonVersion = "3.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
